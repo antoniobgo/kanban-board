@@ -4,8 +4,21 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    kanbanSteps: [
+      { name: "To Do", cards: [] },
+      { name: "Doing", cards: [] },
+      {
+        name: "Done",
+        cards: [],
+      },
+    ],
+  },
+  mutations: {
+    addCardToStep(state, data) {
+      data.step.cards.push(data.card);
+    },
+  },
   actions: {},
-  modules: {}
+  modules: {},
 });

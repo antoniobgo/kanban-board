@@ -1,18 +1,25 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+<template lang="pug">
+v-container(fluid)
+  div(v-if="kanbanSteps").pa-4.d-flex
+    v-row
+      v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
+        kanban-step(:step="step").mr-5
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import { mapState } from "vuex";
+import KanbanStep from "@/components/KanbanStep";
 export default {
   name: "Home",
-  components: {
-    HelloWorld
+  components: { KanbanStep },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapState(["kanbanSteps"])
   }
 };
 </script>
+
+<style>
+</style>
