@@ -1,6 +1,7 @@
 <template lang="pug">
   v-card(width="250" color="grey")
     v-card-title {{ step.name }}
+    v-divider
     v-card-text.pb-2
       v-card(v-for="(card,index) in step.cards")
         v-row.mt-2(dense no-gutters)
@@ -22,12 +23,12 @@
           v-text-field.pa-0(@keypress.enter="addCardToStep"
                             v-model="newCardTitle"
                             dense
-                            label="Adicione um titulo para esse card"
+                            label="Titulo"
                             outlined
                             hide-details
                             )
         v-row(dense no-gutters)
-          v-btn(@click="addCardToStep" outlined) adicionar
+          v-btn(@click="addCardToStep" :disabled="newCardTitle.length == 0" outlined) confirmar
           v-btn(@click="changeWaitingToAddCardState" icon)
             v-icon mdi-close
 
@@ -49,7 +50,7 @@ export default {
   data() {
     return {
       waitingToAddCardState: true,
-      newCardTitle: undefined,
+      newCardTitle: "",
       display: {},
     };
   },
@@ -58,11 +59,13 @@ export default {
       // this.cardDialog = true;
     },
     addCardToStep() {
-      this.$store.commit("addCardToStep", {
-        step: this.step,
-        card: { name: this.newCardTitle, description: "", dueAt: undefined },
-      });
-      this.newCardTitle = undefined;
+      if (this.newCardTitle.length > 0) {
+        this.$store.commit("addCardToStep", {
+          step: this.step,
+          card: { name: this.newCardTitle, description: "", dueAt: undefined },
+        });
+        this.newCardTitle = "";
+      }
     },
     changeWaitingToAddCardState() {
       this.waitingToAddCardState = !this.waitingToAddCardState;

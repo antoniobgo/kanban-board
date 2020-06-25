@@ -1,7 +1,7 @@
 <template lang="pug">
 v-container(fluid)
   div(v-if="kanbanSteps").pa-4.d-flex
-    v-row
+    v-row(justify="center")
       v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
         kanban-step(:step="step").mr-5
 </template>
@@ -16,10 +16,9 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(["kanbanSteps"])
-  }
+    ...mapState(["kanbanSteps"]),
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>
