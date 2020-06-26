@@ -1,19 +1,19 @@
 <template lang="pug">
   v-card(width="250" color="grey")
-    v-card-title {{ step.name }}
+    v-card-title.pa-2.pb-0 {{ step.name }}
     v-divider
     v-card-text.pb-2
       v-card(v-for="(card,index) in step.cards")
         v-row.mt-2(dense no-gutters)
           v-col(cols="10")
-            v-dialog(v-model="display[index]" width="400")
-              template(v-slot:activator="{on}")
-                v-card-text#cursor( v-on="on").pa-1.pl-2.pt-1
-                  | {{ card.name }}
-              kanban-card(:card="card")
+            v-card-text#cursor.pa-1.pl-2.pt-1
+              | {{ card.title }}
           v-col(cols="2")
-            v-btn#alou(icon)
-              v-icon mdi-pencil-outline
+            v-dialog#teste(v-model="display[index]" width="700" height="700")
+              template(v-slot:activator="{on}")
+                v-btn#alou(v-on="on" icon)
+                  v-icon mdi-pencil-outline
+              kanban-card(@closeDialog="display[index] = false" :card="card")
       v-row(v-if="waitingToAddCardState" justify="center")
         v-btn.mt-4(@click="changeWaitingToAddCardState" outlined)
           | Adicionar card
@@ -55,14 +55,11 @@ export default {
     };
   },
   methods: {
-    teste() {
-      // this.cardDialog = true;
-    },
     addCardToStep() {
       if (this.newCardTitle.length > 0) {
         this.$store.commit("addCardToStep", {
           step: this.step,
-          card: { name: this.newCardTitle, description: "", dueAt: undefined },
+          card: { title: this.newCardTitle, description: "", dueAt: undefined },
         });
         this.newCardTitle = "";
       }
@@ -82,5 +79,8 @@ export default {
 #alou {
   max-height: 30px;
   max-width: 30px;
+}
+#teste {
+  height: 700px;
 }
 </style>

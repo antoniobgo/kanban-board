@@ -18,6 +18,10 @@ export default new Vuex.Store({
     addCardToStep(state, data) {
       data.step.cards.push(data.card);
     },
+    updateCard(state, data) {
+      data.card.title = data.updateData.title;
+      data.card.description = data.updateData.description;
+    },
   },
   actions: {},
   modules: {},
