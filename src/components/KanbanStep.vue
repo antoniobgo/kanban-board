@@ -59,7 +59,11 @@ export default {
       if (this.newCardTitle.length > 0) {
         this.$store.commit("addCardToStep", {
           step: this.step,
-          card: { title: this.newCardTitle, description: "", dueAt: undefined }
+          card: {
+            title: this.newCardTitle,
+            description: "",
+            dueAt: new Date().toISOString().substr(0, 10)
+          }
         });
         this.newCardTitle = "";
       }

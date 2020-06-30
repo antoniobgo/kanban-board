@@ -2,7 +2,7 @@
 v-container(fluid)
   div(v-if="kanbanSteps").pa-4
     v-row
-      v-col.pa-0(v-for="step in kanbanSteps" :key="step.name" cols="2")
+      v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
         kanban-step(:step="step").mr-5
 </template>
 

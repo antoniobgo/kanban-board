@@ -45,7 +45,7 @@ export default {
     return {
       newTitle: this.card.title,
       newDescription: this.card.newDescription,
-      datePicker: this.card.dueAt || new Date().toISOString().substr(0, 10),
+      datePicker: this.card.dueAt,
       menu1: false
     };
   },
