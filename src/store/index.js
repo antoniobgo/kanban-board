@@ -21,6 +21,7 @@ export default new Vuex.Store({
     updateCard(state, data) {
       data.card.title = data.updateData.title;
       data.card.description = data.updateData.description;
+      data.card.dueAt = data.updateData.dueAt;
     },
   },
   actions: {},

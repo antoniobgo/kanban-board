@@ -9,7 +9,7 @@
             v-card-text#cursor.pa-1.pl-2.pt-1
               | {{ card.title }}
           v-col(cols="2")
-            v-dialog#teste(v-model="display[index]" width="700" height="700")
+            v-dialog#teste(v-model="display[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
                 v-btn#alou(v-on="on" icon)
                   v-icon mdi-pencil-outline
@@ -39,19 +39,19 @@
 import KanbanCard from "@/components/KanbanCard";
 export default {
   components: {
-    KanbanCard,
+    KanbanCard
   },
   props: {
     step: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       waitingToAddCardState: true,
       newCardTitle: "",
-      display: {},
+      display: {}
     };
   },
   methods: {
@@ -59,7 +59,7 @@ export default {
       if (this.newCardTitle.length > 0) {
         this.$store.commit("addCardToStep", {
           step: this.step,
-          card: { title: this.newCardTitle, description: "", dueAt: undefined },
+          card: { title: this.newCardTitle, description: "", dueAt: undefined }
         });
         this.newCardTitle = "";
       }
@@ -67,8 +67,8 @@ export default {
     changeWaitingToAddCardState() {
       this.waitingToAddCardState = !this.waitingToAddCardState;
     },
-    addCard() {},
-  },
+    addCard() {}
+  }
 };
 </script>
 
