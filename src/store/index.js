@@ -18,6 +18,9 @@ export default new Vuex.Store({
     addCardToStep(state, data) {
       data.step.cards.push(data.card);
     },
+    addStep(state, stepName) {
+      state.kanbanSteps.push({ name: stepName, cards: [] });
+    },
     updateCard(state, data) {
       data.card.title = data.updateData.title;
       data.card.description = data.updateData.description;
