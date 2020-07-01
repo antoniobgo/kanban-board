@@ -66,6 +66,7 @@ export default {
           }
         });
         this.newCardTitle = "";
+        this.waitingToAddCardState = true;
       }
     },
     changeWaitingToAddCardState() {

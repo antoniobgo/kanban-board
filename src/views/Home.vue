@@ -1,22 +1,21 @@
 <template lang="pug">
-v-container(fluid)
-  div(v-if="kanbanSteps").pa-4
-    v-row
-      v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
-        kanban-step(:step="step").mr-5
-      v-col(cols="2")
-        v-card(width="250" color="grey")
-          v-card-title.pa-2
-            v-row.pl-2#cursor(@click="changeNewStepState" justify="start")
-              v-icon mdi-plus
-              h5 Adicionar uma nova coluna
-          v-divider
-          v-card-text(v-if="addingNewStepState")
-            v-text-field(v-model="stepName" @keypress.enter="onConfirmStepAddClick" dense outlined label="Nome da coluna")
-            v-row(dense)
-              v-btn(@click="onConfirmStepAddClick" :disabled="stepName.length == 0" outlined) confirmar
-              v-btn(icon)
-                v-icon mdi-close
+v-container.pa-4(v-if="kanbanSteps" fluid)
+  v-row
+    v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
+      kanban-step(:step="step").mr-5
+    v-col(cols="2")
+      v-card(width="250" color="grey")
+        v-card-title.pa-2
+          v-row.pl-2#cursor(@click="changeNewStepState" justify="start")
+            v-icon mdi-plus
+            h5 Adicionar uma nova coluna
+        v-divider
+        v-card-text(v-if="addingNewStepState")
+          v-text-field(v-model="stepName" @keypress.enter="onConfirmStepAddClick" dense outlined label="Nome da coluna")
+          v-row(dense)
+            v-btn(@click="onConfirmStepAddClick" :disabled="stepName.length == 0" outlined) confirmar
+            v-btn(icon)
+              v-icon mdi-close
 </template>
 
 <script>
