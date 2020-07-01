@@ -27,8 +27,9 @@
               v-on="on"
           )
         v-date-picker(v-model="datePicker" @input="menu1 = false")
-      v-divider
+      v-divider.my-3
       v-card-actions
+        v-btn(@click="onCancelUpdate") cancelar
         v-spacer
         v-btn(@click="onConfirmUpdate") confirmar
 </template>
@@ -60,6 +61,15 @@ export default {
         }
       });
       this.$emit("closeDialog");
+    },
+    onCancelUpdate() {
+      this.resetFields();
+      this.$emit("closeDialog");
+    },
+    resetFields() {
+      this.newTitle = this.card.title;
+      this.newDescription = this.card.newDescription;
+      this.datePicker = this.card.dueAt;
     }
   }
 };
