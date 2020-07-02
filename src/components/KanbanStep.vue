@@ -13,7 +13,7 @@
               template(v-slot:activator="{on}")
                 v-btn#alou(v-on="on" icon)
                   v-icon mdi-pencil-outline
-              kanban-card(@closeDialog="display[index] = false" :card="card" :step="step")
+              kanban-edit-card(@closeDialog="display[index] = false" :card="card" :step="step")
       v-row(v-if="waitingToAddCardState" justify="center")
         v-btn.mt-4(@click="changeWaitingToAddCardState" outlined)
           | Adicionar card
@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import KanbanCard from "@/components/KanbanCard";
+import KanbanEditCard from "@/components/KanbanEditCard";
 export default {
   components: {
-    KanbanCard
+    KanbanEditCard
   },
   props: {
     step: {

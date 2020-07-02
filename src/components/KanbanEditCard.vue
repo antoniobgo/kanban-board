@@ -6,12 +6,16 @@
     )
       | Editar Card
     v-card-text.pl-3.pt-1
-      v-text-field(v-model="newTitle" label="Título" prepend-icon="mdi-card-text-outline")
-      v-textarea.mt-3(v-model="newDescription" rows="2" label="Descrição" prepend-icon="mdi-card-text-outline")
-      v-row(justify="space-around")
+      v-text-field(v-model="newTitle" label="Título" prepend-icon="mdi-card-text-outline" filled)
+      v-textarea.mt-3(v-model="newDescription" rows="2" label="Descrição" prepend-icon="mdi-card-text-outline" filled)
+      v-row
         v-col(cols="4")
-          v-select(v-model="selectedStep" :items="kanbanSteps" item-text="name" return-object)
+          v-row
+            h3.ml-3.mb-2 Mover card
+          v-select( v-model="selectedStep" :items="kanbanSteps" item-text="name" filled return-object prepend-icon="mdi-cursor-move")
+        v-spacer
         v-col(cols="4")
+          v-row
           v-menu(
               ref="menu1"
               v-model="menu1"
@@ -21,14 +25,15 @@
               max-width="290px"
               min-width="290px")
             template(v-slot:activator="{on, attrs}")
-              v-text-field(
+              v-text-field.mt-6(
                   v-model="datePicker"
-                  label="Data"
+                  label="Data de entrega"
                   hint="MM/DD/YYYY"
                   persistent-hint
                   prepend-icon="mdi-calendar-outline"
                   v-bind="attrs"
                   v-on="on"
+                  filled
               )
             v-date-picker(v-model="datePicker" @input="menu1 = false")
       v-divider.my-3
