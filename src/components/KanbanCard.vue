@@ -8,25 +8,29 @@
     v-card-text.pl-3.pt-1
       v-text-field(v-model="newTitle" label="Título" prepend-icon="mdi-card-text-outline")
       v-textarea.mt-3(v-model="newDescription" rows="2" label="Descrição" prepend-icon="mdi-card-text-outline")
-      v-menu(
-          ref="menu1"
-          v-model="menu1"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="290px")
-        template(v-slot:activator="{on, attrs}")
-          v-text-field(
-              v-model="datePicker"
-              label="Data"
-              hint="MM/DD/YYYY"
-              persistent-hint
-              prepend-icon="mdi-calendar-outline"
-              v-bind="attrs"
-              v-on="on"
-          )
-        v-date-picker(v-model="datePicker" @input="menu1 = false")
+      v-row(justify="space-around")
+        v-col(cols="4")
+          v-select(v-model="selectedStep" :items="kanbanSteps" item-text="name" return-object)
+        v-col(cols="4")
+          v-menu(
+              ref="menu1"
+              v-model="menu1"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px")
+            template(v-slot:activator="{on, attrs}")
+              v-text-field(
+                  v-model="datePicker"
+                  label="Data"
+                  hint="MM/DD/YYYY"
+                  persistent-hint
+                  prepend-icon="mdi-calendar-outline"
+                  v-bind="attrs"
+                  v-on="on"
+              )
+            v-date-picker(v-model="datePicker" @input="menu1 = false")
       v-divider.my-3
       v-card-actions
         v-btn(@click="onCancelUpdate") cancelar
@@ -35,9 +39,14 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     card: {
+      type: Object,
+      required: true
+    },
+    step: {
       type: Object,
       required: true
     }
@@ -47,8 +56,12 @@ export default {
       newTitle: this.card.title,
       newDescription: this.card.newDescription,
       datePicker: this.card.dueAt,
+      selectedStep: this.step,
       menu1: false
     };
+  },
+  computed: {
+    ...mapState(["kanbanSteps"])
   },
   methods: {
     onConfirmUpdate() {
@@ -60,6 +73,13 @@ export default {
           dueAt: this.datePicker
         }
       });
+      if (this.step != this.selectedStep) {
+        this.$store.commit("updateSteps", {
+          card: this.card,
+          oldStep: this.step,
+          newStep: this.selectedStep
+        });
+      }
       this.$emit("closeDialog");
     },
     onCancelUpdate() {
