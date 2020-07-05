@@ -6,14 +6,17 @@
       v-card(v-for="(card,index) in step.cards")
         v-row.mt-2(dense no-gutters)
           v-col(cols="10")
-            v-card-text#cursor.pa-1.pl-2.pt-1
-              | {{ card.title }}
+            v-dialog#teste(v-model="displayShowCard[index]" width="700" height="700")
+              template(v-slot:activator="{on}")
+                v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
+                  | {{ card.title }}
+              kanban-show-card(@closeDialog="displayShowCard[index] = false" :card="card" :step="step")
           v-col(cols="2")
-            v-dialog#teste(v-model="display[index]" width="700" height="700" persistent)
+            v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
                 v-btn#alou(v-on="on" icon)
                   v-icon mdi-pencil-outline
-              kanban-edit-card(@closeDialog="display[index] = false" :card="card" :step="step")
+              kanban-edit-card(@closeDialog="displayEditCard[index] = false" :card="card" :step="step")
       v-row(v-if="waitingToAddCardState" justify="center")
         v-btn.mt-4(@click="changeWaitingToAddCardState" outlined)
           | Adicionar card
@@ -37,9 +40,12 @@
 
 <script>
 import KanbanEditCard from "@/components/KanbanEditCard";
+import KanbanShowCard from "@/components/KanbanShowCard";
+
 export default {
   components: {
-    KanbanEditCard
+    KanbanEditCard,
+    KanbanShowCard
   },
   props: {
     step: {
@@ -51,7 +57,8 @@ export default {
     return {
       waitingToAddCardState: true,
       newCardTitle: "",
-      display: {}
+      displayEditCard: {},
+      displayShowCard: {}
     };
   },
   methods: {

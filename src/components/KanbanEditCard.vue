@@ -4,7 +4,7 @@
       primary-title
       class="headline grey lighten-2"
     )
-      | Editar Card
+      | Editar
     v-card-text.pl-3.pt-1
       v-text-field(v-model="newTitle" label="Título" prepend-icon="mdi-card-text-outline" filled)
       v-textarea.mt-3(v-model="newDescription" rows="2" label="Descrição" prepend-icon="mdi-card-text-outline" filled)
