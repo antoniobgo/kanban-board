@@ -7,10 +7,10 @@
       | {{ card.title }}
     v-card-text.pl-3.pt-1
       h3 Descrição
-      p(v-if="card.description || card.description.length > 0") {{ card.description }}
+      p(v-if="card.description && card.description.length > 0") {{ card.description }}
       p(v-else) Edite para adicionar descrição
       h3 Data de entrega
-      p(v-if="card.dueAt || card.dueAt.length > 0") {{ card.dueAt }}
+      p(v-if="card.dueAt && card.dueAt.length > 0") {{ card.dueAt }}
       p(v-else) Edite para adicionar data de entrega
       h3 Status
       p {{ step.name }}
