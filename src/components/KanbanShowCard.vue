@@ -5,7 +5,7 @@
       class="headline grey lighten-2"
     )
       | {{ card.title }}
-    v-card-text.pl-3.pt-1
+    v-card-text.pt-5
       h3 Descrição
       p(v-if="card.description && card.description.length > 0") {{ card.description }}
       p(v-else) Edite para adicionar descrição

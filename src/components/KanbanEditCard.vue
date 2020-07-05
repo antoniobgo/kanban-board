@@ -40,7 +40,7 @@
       v-card-actions
         v-btn(@click="onCancelUpdate") cancelar
         v-spacer
-        v-btn(@click="onConfirmUpdate") confirmar
+        v-btn(@click="onConfirmUpdate" :disabled="confirmButtomDisabledRules()") confirmar
 </template>
 
 <script>
@@ -95,6 +95,10 @@ export default {
       this.newTitle = this.card.title;
       this.newDescription = this.card.newDescription;
       this.datePicker = this.card.dueAt;
+    },
+    confirmButtomDisabledRules() {
+      if (this.newTitle) return !this.newTitle.length > 0;
+      return true;
     }
   }
 };
