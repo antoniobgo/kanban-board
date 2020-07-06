@@ -11,8 +11,8 @@
                 v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
                   h4 {{ card.title }}
                   v-row.pt-1(v-if="card.dueAt && card.dueAt.length > 0" dense)
-                    v-icon.pr-1(small) mdi-clock-time-five-outline
-                    h5 {{ card.dueAt }}
+                    v-icon.pr-1.pl-1(:class="getDateColor(card)" small) mdi-clock-time-five-outline
+                    h5.pr-1(:class="getDateColor(card)") {{ card.dueAt }}
               kanban-show-card(@closeDialog="displayShowCard[index] = false" @changeToEditCard="changeToEditCard(index)" :card="card" :step="step")
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
@@ -72,7 +72,8 @@ export default {
           card: {
             title: this.newCardTitle,
             description: "",
-            dueAt: undefined
+            dueAt: undefined,
+            completed: false
           }
         });
         this.newCardTitle = "";
@@ -85,6 +86,16 @@ export default {
     changeToEditCard(index) {
       this.displayShowCard[index] = false;
       this.displayEditCard[index] = true;
+    },
+    getDateColor(card) {
+      if (card.completed) return "green";
+      let dateParts = card.dueAt.split("-");
+      let cardDueDate = new Date(
+        dateParts[0],
+        parseInt(dateParts[1]) - 1,
+        dateParts[2]
+      );
+      return cardDueDate < new Date().setHours(0, 0, 0, 0) ? "red" : "";
     }
   }
 };

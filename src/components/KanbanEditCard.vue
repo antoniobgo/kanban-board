@@ -10,12 +10,8 @@
       v-textarea.mt-3(v-model="newDescription" rows="2" label="Descrição" prepend-icon="mdi-card-text-outline" filled)
       v-row
         v-col(cols="4")
-          v-row
-            h3.ml-3.mb-2 Mover card
-          v-select( v-model="selectedStep" :items="kanbanSteps" item-text="name" filled return-object prepend-icon="mdi-cursor-move")
-        v-spacer
-        v-col(cols="4")
-          v-row
+          v-row(justify="center")
+            h3 Alterar data
           v-menu(
               ref="menu1"
               v-model="menu1"
@@ -25,7 +21,7 @@
               max-width="290px"
               min-width="290px")
             template(v-slot:activator="{on, attrs}")
-              v-text-field.mt-6(
+              v-text-field.mt-2(
                   v-model="datePicker"
                   label="Data de entrega"
                   hint="MM/DD/YYYY"
@@ -36,6 +32,13 @@
                   filled
               )
             v-date-picker(v-model="datePicker" @input="menu1 = false")
+        v-col(cols="4")
+          v-row(justify="center")
+            h3.ml-3.mb-2 Mover card
+          v-select( v-model="selectedStep" :items="kanbanSteps" item-text="name" filled return-object prepend-icon="mdi-cursor-move")
+      div.d-flex
+        v-checkbox(v-model="isCardCompleted")
+        h3.pt-5 Concluído
       v-divider.my-3
       v-card-actions
         v-btn(@click="onCancelUpdate") cancelar
@@ -62,6 +65,7 @@ export default {
       newDescription: this.card.newDescription,
       datePicker: this.card.dueAt,
       selectedStep: this.step,
+      isCardCompleted: this.card.completed,
       menu1: false
     };
   },
@@ -75,7 +79,8 @@ export default {
         updateData: {
           title: this.newTitle,
           description: this.newDescription,
-          dueAt: this.datePicker
+          dueAt: this.datePicker,
+          completed: this.isCardCompleted
         }
       });
       if (this.step != this.selectedStep) {

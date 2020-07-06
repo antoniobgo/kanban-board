@@ -16,6 +16,7 @@
       p(v-else) Edite para adicionar data de entrega
       h3 Status
       p {{ step.name }}
+      h4(v-if="card.completed") Marcado como concluido
       v-divider.my-3
       v-card-actions
         v-spacer

@@ -25,6 +25,7 @@ export default new Vuex.Store({
       data.card.title = data.updateData.title;
       data.card.description = data.updateData.description;
       data.card.dueAt = data.updateData.dueAt;
+      data.card.completed = data.updateData.completed;
     },
     updateSteps(state, data) {
       data.oldStep.cards.splice(data.oldStep.cards.indexOf(data.card), 1);
