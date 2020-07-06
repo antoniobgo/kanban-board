@@ -10,9 +10,15 @@
               template(v-slot:activator="{on}")
                 v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
                   h4 {{ card.title }}
-                  v-row.pt-1(v-if="card.dueAt && card.dueAt.length > 0" dense)
-                    v-icon.pr-1.pl-1(:class="getDateColor(card)" small) mdi-clock-time-five-outline
-                    h5.pr-1(:class="getDateColor(card)") {{ card.dueAt }}
+                  v-tooltip(v-if="card.dueAt && card.dueAt.length > 0" top)
+                    template(v-slot:activator="{on}")
+                      v-row.pt-1(v-if="card.dueAt && card.dueAt.length > 0"
+                                v-on="on"
+                                dense
+                                )
+                        v-icon.pr-1.pl-1(:class="getDateColor(card)" small) mdi-clock-time-five-outline
+                        h5.pr-1(:class="getDateColor(card)") {{ card.dueAt }}
+                    span {{ dateTooltip(card) }}
               kanban-show-card(@closeDialog="displayShowCard[index] = false" @changeToEditCard="changeToEditCard(index)" :card="card" :step="step")
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
@@ -96,6 +102,18 @@ export default {
         dateParts[2]
       );
       return cardDueDate < new Date().setHours(0, 0, 0, 0) ? "red" : "";
+    },
+    dateTooltip(card) {
+      let dateParts = card.dueAt.split("-");
+      let cardDueDate = new Date(
+        dateParts[0],
+        parseInt(dateParts[1]) - 1,
+        dateParts[2]
+      );
+      if (card.completed) return "Essa tarefa está concluída";
+      else if (cardDueDate < new Date().setHours(0, 0, 0, 0))
+        return "Essa tarefa está atrasada";
+      return "Essa tarefa está em dia";
     }
   }
 };
