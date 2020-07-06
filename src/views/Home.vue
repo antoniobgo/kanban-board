@@ -1,9 +1,9 @@
 <template lang="pug">
 v-container.pa-4(v-if="kanbanSteps" fluid)
-  v-row
-    v-col(v-for="step in kanbanSteps" :key="step.name" cols="2")
+  .d-flex
+    .d-flex.flex-column(v-for="step in kanbanSteps" :key="step.name")
       kanban-step(:step="step").mr-5
-    v-col(cols="2")
+    .d-flex.flex-column
       v-card(width="250" color="grey")
         v-card-title.pa-2
           v-row.pl-2#cursor(@click="changeNewStepState" justify="start")
@@ -11,7 +11,7 @@ v-container.pa-4(v-if="kanbanSteps" fluid)
             h5 Adicionar uma nova coluna
         v-divider
         v-card-text(v-if="addingNewStepState")
-          v-text-field(v-model="stepName" @keypress.enter="onConfirmStepAddClick" dense outlined label="Nome da coluna")
+          v-text-field(v-model="stepName" autofocus @keypress.enter="onConfirmStepAddClick" dense outlined label="Nome da coluna")
           v-row(dense)
             v-btn(@click="onConfirmStepAddClick" :disabled="stepName.length == 0" outlined) confirmar
             v-btn(icon)
@@ -27,11 +27,11 @@ export default {
   data() {
     return {
       addingNewStepState: false,
-      stepName: ""
+      stepName: "",
     };
   },
   computed: {
-    ...mapState(["kanbanSteps"])
+    ...mapState(["kanbanSteps"]),
   },
   methods: {
     changeNewStepState() {
@@ -41,8 +41,8 @@ export default {
       this.$store.commit("addStep", this.stepName);
       this.stepName = "";
       this.changeNewStepState();
-    }
-  }
+    },
+  },
 };
 </script>
 
