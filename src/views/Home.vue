@@ -38,9 +38,11 @@ export default {
       this.addingNewStepState = !this.addingNewStepState;
     },
     onConfirmStepAddClick() {
-      this.$store.commit("addStep", this.stepName);
-      this.stepName = "";
-      this.changeNewStepState();
+      if (this.stepName.length > 0) {
+        this.$store.commit("addStep", this.stepName);
+        this.stepName = "";
+        this.changeNewStepState();
+      }
     },
   },
 };
