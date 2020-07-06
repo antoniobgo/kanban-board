@@ -9,7 +9,10 @@
             v-dialog#teste(v-model="displayShowCard[index]" width="700" height="700")
               template(v-slot:activator="{on}")
                 v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
-                  | {{ card.title }}
+                  h4 {{ card.title }}
+                  v-row.pt-1(v-if="card.dueAt && card.dueAt.length > 0" dense)
+                    v-icon.pr-1(small) mdi-clock-time-five-outline
+                    h5 {{ card.dueAt }}
               kanban-show-card(@closeDialog="displayShowCard[index] = false" @changeToEditCard="changeToEditCard(index)" :card="card" :step="step")
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
@@ -69,7 +72,7 @@ export default {
           card: {
             title: this.newCardTitle,
             description: "",
-            dueAt: new Date().toISOString().substr(0, 10)
+            dueAt: undefined
           }
         });
         this.newCardTitle = "";
