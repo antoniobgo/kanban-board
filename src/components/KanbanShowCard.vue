@@ -5,6 +5,8 @@
       class="headline grey lighten-2"
     )
       | {{ card.title }}
+      v-btn(@click="changeToEditCard" icon)
+        v-icon mdi-pencil-outline
     v-card-text.pt-5
       h3 Descrição
       p(v-if="card.description && card.description.length > 0") {{ card.description }}
@@ -66,6 +68,9 @@ export default {
       this.newTitle = this.card.title;
       this.newDescription = this.card.newDescription;
       this.datePicker = this.card.dueAt;
+    },
+    changeToEditCard() {
+      this.$emit("changeToEditCard");
     }
   }
 };

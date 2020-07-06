@@ -10,7 +10,7 @@
               template(v-slot:activator="{on}")
                 v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
                   | {{ card.title }}
-              kanban-show-card(@closeDialog="displayShowCard[index] = false" :card="card" :step="step")
+              kanban-show-card(@closeDialog="displayShowCard[index] = false" @changeToEditCard="changeToEditCard(index)" :card="card" :step="step")
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
@@ -79,7 +79,10 @@ export default {
     changeWaitingToAddCardState() {
       this.waitingToAddCardState = !this.waitingToAddCardState;
     },
-    addCard() {}
+    changeToEditCard(index) {
+      this.displayShowCard[index] = false;
+      this.displayEditCard[index] = true;
+    }
   }
 };
 </script>
