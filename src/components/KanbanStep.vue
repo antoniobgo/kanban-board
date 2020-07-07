@@ -1,6 +1,26 @@
 <template lang="pug">
   v-card(width="250" color="grey")
-    v-card-title.pa-2.pb-0 {{ step.name }}
+    v-card-title(v-if="showStepNameState").pa-2.pb-0 {{ step.name }}
+      v-spacer
+      v-menu(offset-y)
+        template(v-slot:activator="{on}")
+          v-btn(v-on="on" icon)
+            v-icon mdi-dots-vertical
+        v-list
+          v-list-item(@click="onEditClick")
+            v-list-item-title Editar
+          v-list-item(@click="onDeleteClick")
+            v-list-item-title Excluir
+    v-card-title.pb-0(v-else)
+      v-row(justify="space-between" dense)
+        v-col(cols="7")
+          v-text-field(v-model="newStepName" label="Novo nome" outlined autofocus dense)
+        v-col.pl-5.pt-1(cols="5")
+          v-row(dense)
+            v-btn(@click="onConfirmEditName" icon)
+              v-icon mdi-check
+            v-btn(@click="onCancelEditName" icon)
+              v-icon mdi-close
     v-divider
     v-card-text.pb-2
       v-card(v-for="(card,index) in step.cards")
@@ -35,7 +55,7 @@
           v-text-field.pa-0(@keypress.enter="addCardToStep"
                             v-model="newCardTitle"
                             dense
-                            label="Titulo"
+                            label="Nome"
                             outlined
                             hide-details
                             )
@@ -54,20 +74,22 @@ import KanbanShowCard from "@/components/KanbanShowCard";
 export default {
   components: {
     KanbanEditCard,
-    KanbanShowCard
+    KanbanShowCard,
   },
   props: {
     step: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       waitingToAddCardState: true,
+      showStepNameState: true,
       newCardTitle: "",
       displayEditCard: {},
-      displayShowCard: {}
+      displayShowCard: {},
+      newStepName: undefined,
     };
   },
   methods: {
@@ -79,8 +101,8 @@ export default {
             title: this.newCardTitle,
             description: "",
             dueAt: undefined,
-            completed: false
-          }
+            completed: false,
+          },
         });
         this.newCardTitle = "";
         this.waitingToAddCardState = true;
@@ -114,8 +136,24 @@ export default {
       else if (cardDueDate < new Date().setHours(0, 0, 0, 0))
         return "Essa tarefa está atrasada";
       return "Essa tarefa está em dia";
-    }
-  }
+    },
+    onEditClick() {
+      this.showStepNameState = !this.showStepNameState;
+    },
+    onDeleteClick() {
+      this.$store.commit("destroyStep", this.step);
+    },
+    onConfirmEditName() {
+      this.$store.commit("updateStepName", {
+        step: this.step,
+        newStepName: this.newStepName,
+      });
+    },
+    onCancelEditName() {
+      this.showStepNameState = true;
+      this.newStepName = undefined;
+    },
+  },
 };
 </script>
 

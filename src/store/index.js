@@ -31,6 +31,12 @@ export default new Vuex.Store({
       data.oldStep.cards.splice(data.oldStep.cards.indexOf(data.card), 1);
       data.newStep.cards.push(data.card);
     },
+    destroyStep(state, step) {
+      state.kanbanSteps.splice(state.kanbanSteps.indexOf(step), 1);
+    },
+    updateStepName(state, data) {
+      data.step.name = data.newStepName;
+    },
   },
   actions: {},
   modules: {},
