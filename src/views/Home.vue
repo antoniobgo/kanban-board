@@ -14,7 +14,7 @@ v-container.pa-4#overflow(v-if="kanbanSteps" fluid)
           v-text-field(v-model="stepName" autofocus @keypress.enter="onConfirmStepAddClick" dense outlined label="Nome da coluna")
           v-row(dense)
             v-btn(@click="onConfirmStepAddClick" :disabled="stepName.length == 0" outlined) confirmar
-            v-btn(icon)
+            v-btn(@click="changeNewStepState" icon)
               v-icon mdi-close
 </template>
 
@@ -41,7 +41,6 @@ export default {
       if (this.stepName.length > 0) {
         this.$store.commit("addStep", this.stepName);
         this.stepName = "";
-        this.changeNewStepState();
       }
     }
   }
