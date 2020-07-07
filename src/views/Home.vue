@@ -1,5 +1,5 @@
 <template lang="pug">
-v-container.pa-4(v-if="kanbanSteps" fluid)
+v-container.pa-4#overflow(v-if="kanbanSteps" fluid)
   .d-flex
     .d-flex.flex-column(v-for="step in kanbanSteps" :key="step.name")
       kanban-step(:step="step").mr-5
@@ -27,11 +27,11 @@ export default {
   data() {
     return {
       addingNewStepState: false,
-      stepName: "",
+      stepName: ""
     };
   },
   computed: {
-    ...mapState(["kanbanSteps"]),
+    ...mapState(["kanbanSteps"])
   },
   methods: {
     changeNewStepState() {
@@ -43,13 +43,17 @@ export default {
         this.stepName = "";
         this.changeNewStepState();
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style>
 #cursor {
   cursor: pointer;
+}
+#overflow {
+  overflow: auto;
+  height: 93vh;
 }
 </style>
