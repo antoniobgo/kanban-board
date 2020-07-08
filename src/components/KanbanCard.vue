@@ -37,9 +37,10 @@
             v-row(justify="center")
               h3.ml-3.mb-2 Mover card
             v-select( v-model="selectedStep" :items="kanbanSteps" item-text="name" filled return-object prepend-icon="mdi-cursor-move")
-        div.d-flex
-          v-checkbox(v-model="isCardCompleted")
-          h3.pt-5 Concluído
+          v-col(cols="4")
+            v-row.mt-5(justify="center")
+              v-checkbox(v-model="isCardCompleted")
+              h3.pt-5 Concluído
         v-divider.my-3
         v-card-actions
           v-btn(@click="onCancelUpdate") cancelar
