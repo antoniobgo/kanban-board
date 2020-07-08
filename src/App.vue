@@ -1,9 +1,8 @@
 <template lang="pug">
   v-app
     v-app-bar(app)
-      v-btn(icon)
-        v-app-bar-nav-icon
-      v-toolbar-title Kanban Board
+      v-row(justify="center")
+        v-toolbar-title Kanban Board
     v-content
       router-view
 </template>
@@ -14,11 +13,11 @@ export default {
   name: "App",
 
   components: {
-    Home
+    Home,
   },
 
   data: () => ({
     //
-  })
+  }),
 };
 </script>
