@@ -39,13 +39,18 @@
                         v-icon.pr-1.pl-1(:class="getDateColor(card)" small) mdi-clock-time-five-outline
                         h5.pr-1(:class="getDateColor(card)") {{ card.dueAt }}
                     span {{ dateTooltip(card) }}
-              kanban-show-card(@closeDialog="displayShowCard[index] = false" @changeToEditCard="changeToEditCard(index)" :card="card" :step="step")
+              kanban-card(@closeDialog="displayShowCard[index] = false"
+                              @changeToEditCard="changeToEditCard(index)" 
+                              :card="card"
+                              :step="step"
+                              :isInitialStateEdit="false"
+                              )
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
                 v-btn#alou(v-on="on" icon)
                   v-icon mdi-pencil-outline
-              kanban-edit-card(@closeDialog="displayEditCard[index] = false" :card="card" :step="step")
+              kanban-card(@closeDialog="displayEditCard[index] = false" :card="card" :step="step" :isInitialStateEdit="true")
       v-row(v-if="waitingToAddCardState" justify="center")
         v-btn.mt-4(@click="changeWaitingToAddCardState" outlined)
           | Adicionar card
@@ -68,13 +73,11 @@
 </template>
 
 <script>
-import KanbanEditCard from "@/components/KanbanEditCard";
-import KanbanShowCard from "@/components/KanbanShowCard";
+import KanbanCard from "@/components/KanbanCard";
 
 export default {
   components: {
-    KanbanEditCard,
-    KanbanShowCard,
+    KanbanCard,
   },
   props: {
     step: {
