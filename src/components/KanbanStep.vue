@@ -25,7 +25,7 @@
     v-card-text.pb-2
       v-card(v-for="(card,index) in step.cards")
         v-row.mt-2(dense no-gutters)
-          v-col(cols="10")
+          v-col(cols="8")
             v-dialog#teste(v-model="displayShowCard[index]" width="700" height="700")
               template(v-slot:activator="{on}")
                 v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
@@ -48,9 +48,12 @@
           v-col(cols="2")
             v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
-                v-btn#alou(v-on="on" icon)
+                v-btn(small v-on="on" icon)
                   v-icon mdi-pencil-outline
               kanban-card(@closeDialog="displayEditCard[index] = false" :card="card" :step="step" :isInitialStateEdit="true")
+          v-col(cols="2")
+            v-btn(@click="onClickDeleteCard(card)" small icon)
+              v-icon mdi-close
       v-row(v-if="waitingToAddCardState" justify="center")
         v-btn.mt-4(@click="changeWaitingToAddCardState" outlined)
           | Adicionar card
@@ -156,6 +159,9 @@ export default {
       this.showStepNameState = true;
       this.newStepName = undefined;
     },
+    onClickDeleteCard(card) {
+      this.$store.commit("deleteCard", { card: card, step: this.step} )
+    }
   },
 };
 </script>
@@ -163,10 +169,6 @@ export default {
 <style>
 #cursor {
   cursor: pointer;
-}
-#alou {
-  max-height: 30px;
-  max-width: 30px;
 }
 #teste {
   height: 700px;

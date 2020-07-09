@@ -37,6 +37,9 @@ export default new Vuex.Store({
     updateStepName(state, data) {
       data.step.name = data.newStepName;
     },
+    deleteCard(state, data) {
+      data.step.cards.splice(data.step.cards.indexOf(data.card), 1)
+    }
   },
   actions: {},
   modules: {},
