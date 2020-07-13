@@ -14,7 +14,7 @@
     v-card-title.pb-0(v-else)
       v-row(justify="space-between" dense)
         v-col(cols="7")
-          v-text-field(v-model="newStepName" label="Novo nome" outlined autofocus dense)
+          v-text-field(v-model="newStepName" label="Novo nome" outlined dense)
         v-col.pl-5.pt-1(cols="5")
           v-row(dense)
             v-btn(@click="onConfirmEditName" icon)
