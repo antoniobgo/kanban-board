@@ -67,7 +67,7 @@
         v-divider.my-3
         v-card-actions
           v-spacer
-          v-btn(@click="onEditState = true") fechar
+          v-btn(@click="$emit('closeDialog')") fechar
 </template>
 
 <script>
@@ -127,9 +127,11 @@ export default {
           newStep: this.selectedStep,
         });
       }
+      this.onEditState = undefined
       this.$emit("closeDialog");
     },
     onCancelUpdate() {
+      this.onEditState = undefined
       this.resetFields();
       this.$emit("closeDialog");
     },
