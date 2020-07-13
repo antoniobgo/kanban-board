@@ -26,9 +26,9 @@
       v-card(v-for="(card,index) in step.cards")
         v-row.mt-2(dense no-gutters)
           v-col(cols="8")
-            v-dialog#teste(v-model="displayShowCard[index]" width="700" height="700")
+            v-dialog#teste(v-model="displayCard[index]" width="700" height="700")
               template(v-slot:activator="{on}")
-                v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on")
+                v-card-text#cursor.pa-1.pl-2.pt-1(v-on="on" @click="setShowState")
                   h4 {{ card.title }}
                   v-tooltip(v-if="card.dueAt && card.dueAt.length > 0" top)
                     template(v-slot:activator="{on}")
@@ -39,18 +39,18 @@
                         v-icon.pr-1.pl-1(:class="getDateColor(card)" small) mdi-clock-time-five-outline
                         h5.pr-1(:class="getDateColor(card)") {{ card.dueAt }}
                     span {{ dateTooltip(card) }}
-              kanban-card(@closeDialog="displayShowCard[index] = false"
+              kanban-card(@closeDialog="displayCard[index] = false"
                               @changeToEditCard="changeToEditCard(index)" 
                               :card="card"
                               :step="step"
-                              :isInitialStateEdit="false"
+                              :isInitialStateEdit="editState"
                               )
           v-col(cols="2")
-            v-dialog#teste(v-model="displayEditCard[index]" width="700" height="700" persistent)
+            v-dialog#teste(v-model="displayCard[index]" width="700" height="700" persistent)
               template(v-slot:activator="{on}")
-                v-btn(small v-on="on" icon)
+                v-btn(@click="setEditState" small v-on="on" icon)
                   v-icon mdi-pencil-outline
-              kanban-card(@closeDialog="displayEditCard[index] = false" :card="card" :step="step" :isInitialStateEdit="true")
+              kanban-card(@closeDialog="displayCard[index] = false" :card="card" :step="step" :isInitialStateEdit="editState")
           v-col(cols="2")
             v-btn(@click="onClickDeleteCard(card)" small icon)
               v-icon mdi-close
@@ -93,9 +93,9 @@ export default {
       waitingToAddCardState: true,
       showStepNameState: true,
       newCardTitle: "",
-      displayEditCard: {},
-      displayShowCard: {},
+      displayCard: {},
       newStepName: undefined,
+      editState: undefined
     };
   },
   methods: {
@@ -116,10 +116,6 @@ export default {
     },
     changeWaitingToAddCardState() {
       this.waitingToAddCardState = !this.waitingToAddCardState;
-    },
-    changeToEditCard(index) {
-      this.displayShowCard[index] = false;
-      this.displayEditCard[index] = true;
     },
     getDateColor(card) {
       if (card.completed) return "green";
@@ -161,6 +157,12 @@ export default {
     },
     onClickDeleteCard(card) {
       this.$store.commit("deleteCard", { card: card, step: this.step} )
+    },
+    setShowState() {
+      this.editState = false
+    },
+    setEditState() {
+      this.editState = true
     }
   },
 };
