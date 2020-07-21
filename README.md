@@ -1,5 +1,10 @@
 # kanban-board
 
+## Deployed project URL
+```
+https://kanban-board-64bd7.web.app
+```
+
 ## Project setup
 ```
 yarn install
